@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../styles/Animation3.css">
+    <title>Modern Shape Animation</title>
+</head>
+<body>
+<div class="controls">
+    <button onclick="toggleAnimation()">Play/Pause</button>
+    <button onclick="changeColor()">Change Color</button>
+    <button onclick="addShape()">Add Shape</button>
+</div>
+<div class="container" id="container"></div>
+
+<script>
+    let isAnimating = true;
+    let shapes = [];
+    const colors = ['#4CAF50', '#2196F3', '#F44336', '#9C27B0', '#FF9800'];
+    let animationFrame;
+
+    function createShape() {
+        const shape = document.createElement('div');
+        shape.className = 'shape';
+        shape.style.left = Math.random() * 300 + 'px';
+        shape.style.top = Math.random() * 300 + 'px';
+        shape.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+        shape.addEventListener('click', () => {
+            shape.style.transform = `scale(${Math.random() * 0.5 + 0.8}) rotate(${Math.random() * 360}deg)`;
+        });
+
+        return {
+            element: shape,
+            rotation: 0,
+            speed: Math.random() * 2 + 1,
+            direction: Math.random() * Math.PI * 2,
+            scale: 1
+        };
+    }
+
+    function addShape() {
+        const shape = createShape();
+        shapes.push(shape);
+        document.getElementById('container').appendChild(shape.element);
+    }
+
+    function animate() {
+        if (!isAnimating) return;
+
+        shapes.forEach(shape => {
+            shape.rotation += shape.speed;
+
+            // Update position using trigonometric functions for smooth motion
+            const x = Math.cos(shape.direction) * 50;
+            const y = Math.sin(shape.direction) * 50;
+
+            shape.element.style.transform = `
+          translate(${x}px, ${y}px)
+          rotate(${shape.rotation}deg)
+          scale(${shape.scale})
+        `;
+
+            shape.direction += 0.02;
+        });
+
+        animationFrame = requestAnimationFrame(animate);
+    }
+
+    function toggleAnimation() {
+        isAnimating = !isAnimating;
+        if (isAnimating) {
+            animate();
+        } else {
+            cancelAnimationFrame(animationFrame);
+        }
+    }
+
+    function changeColor() {
+        shapes.forEach(shape => {
+            shape.element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        });
+    }
+
+    // Initialize with 3 shapes
+    for (let i = 0; i < 3; i++) {
+        addShape();
+    }
+
+    animate();
+</script>
+</body>
+</html>
