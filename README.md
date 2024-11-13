@@ -18,8 +18,8 @@ This project demonstrates a simple yet elegant animation of a React-like logo us
 Animation/
 ├── src/
 │   ├── index.html
-│   ├── styles.css
-│   └── animation.js
+│   ├── styles
+│   └── animation
 ├── .gitignore
 └── README.md
 ```
