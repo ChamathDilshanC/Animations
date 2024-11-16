@@ -1,0 +1,180 @@
+/* Modern Terminal Loader Styles */
+:root {
+    --terminal-bg: #1e1e2e;
+    --terminal-header: #313244;
+    --terminal-text: #a6e3a1;
+    --terminal-prefix: #89b4fa;
+    --terminal-success: #94e2d5;
+    --terminal-border: #45475a;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background-color: #11111b;
+    font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.terminal-container {
+    padding: 20px;
+    max-width: 100%;
+}
+
+.terminal-loader {
+    width: 600px;
+    max-width: 100%;
+    background-color: var(--terminal-bg);
+    border: 1px solid var(--terminal-border);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.terminal-header {
+    background-color: var(--terminal-header);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--terminal-border);
+}
+
+.terminal-title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.control:hover {
+    transform: scale(1.1);
+}
+
+.control.close {
+    background-color: #f38ba8;
+}
+
+.control.minimize {
+    background-color: #f9e2af;
+}
+
+.control.maximize {
+    background-color: #a6e3a1;
+}
+
+.terminal-content {
+    padding: 20px;
+    min-height: 300px;
+}
+
+.text-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: slideIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+}
+
+.prefix {
+    color: var(--terminal-prefix);
+    font-weight: bold;
+}
+
+.text {
+    color: var(--terminal-text);
+    position: relative;
+    display: inline-block;
+    animation: typing 2s steps(30, end);
+}
+
+.text-line.success {
+    color: var(--terminal-success);
+}
+
+.text-line.success .prefix {
+    color: var(--terminal-success);
+}
+
+.text-line.success .text {
+    color: var(--terminal-success);
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .terminal-loader {
+        width: 100%;
+        margin: 10px;
+    }
+
+    .terminal-content {
+        padding: 15px;
+        min-height: 250px;
+    }
+
+    .terminal-title {
+        font-size: 12px;
+    }
+}
+
+/* Remove text selection */
+.terminal-loader {
+    user-select: none;
+}
+
+/* Ensure smooth animations */
+* {
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
