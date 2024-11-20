@@ -45,7 +45,6 @@
     position: relative;
     top: 1em;
     text-transform: lowercase;
-    animation: wave 5000ms infinite linear;
 }
 
 .wave:nth-child(2),
