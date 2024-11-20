@@ -60,6 +60,7 @@
 .wave {
     border-radius: 40%;
     animation: wave 55s infinite linear;
+    animation-timing-function: ease-in-out;
 }
 
 .playing .wave:nth-child(2) {
