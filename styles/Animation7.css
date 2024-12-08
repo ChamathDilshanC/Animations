@@ -1,90 +1,169 @@
-/* From Uiverse.io by MikeAndrewDesigner */
-.e-card {
-    margin: 100px auto;
-    background: transparent;
-    box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.45);
-    position: relative;
-    width: 240px;
-    height: 330px;
-    border-radius: 16px;
-    overflow: hidden;
+/* Copyright (c) 2024 by Ines (https://codepen.io/inescodes/pen/PoxMyvX)*/
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800;900&display=swap");
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.wave {
-    position: absolute;
-    width: 540px;
-    height: 700px;
-    opacity: 0.6;
-    left: 0;
-    top: 0;
-    margin-left: -50%;
-    margin-top: -70%;
-    background: linear-gradient(744deg,#af40ff,#5b42f3 60%,#00ddeb);
+html,
+body {
+    height: 100%;
+    min-height: 100vh;
 }
 
-.icon {
-    width: 3em;
-    margin-top: -1em;
-    padding-bottom: 1em;
+body {
+    display: grid;
+    place-items: center;
+    font-family: "League Spartan", system-ui, sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.2;
+    background-color: #212121;
+    color: #ddd;
 }
 
-.infotop {
+ul {
+    list-style: none;
+}
+
+.main {
+    max-width: 75rem;
+    padding: 3em 1.5em;
+}
+
+.main__heading {
+    font-weight: 600;
+    font-size: 2.25em;
+    margin-bottom: 0.75em;
     text-align: center;
-    font-size: 20px;
-    position: absolute;
-    top: 5.6em;
-    left: 0;
-    right: 0;
-    color: rgb(255, 255, 255);
+    color: #eceff1;
+}
+
+.cards {
+    position: relative;
+}
+
+.cards__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5em;
+}
+
+.card {
+    --flow-space: 0.5em;
+    --hsl: var(--hue), var(--saturation), var(--lightness);
+    flex: 1 1 14rem;
+    padding: 1.5em 2em;
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    align-items: start;
+    gap: 1.25em;
+    color: #eceff1;
+    background-color: #2b2b2b;
+    border: 1px solid #eceff133;
+    border-radius: 15px;
+}
+
+.card:nth-child(1) {
+    --hue: 165;
+    --saturation: 82.26%;
+    --lightness: 51.37%;
+}
+
+.card:nth-child(2) {
+    --hue: 291.34;
+    --saturation: 95.9%;
+    --lightness: 61.76%;
+}
+
+.card:nth-child(3) {
+    --hue: 338.69;
+    --saturation: 100%;
+    --lightness: 48.04%;
+}
+
+.card__bullets {
+    line-height: 1.4;
+}
+
+.card__bullets li::before {
+    display: inline-block;
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='16' title='check' fill='%23dddddd'%3E%3Cpath d='M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z' /%3E%3C/svg%3E");
+    transform: translatey(0.25ch);
+    margin-right: 1ch;
+}
+
+.card__heading {
+    font-size: 1.05em;
     font-weight: 600;
 }
 
-.name {
-    font-size: 14px;
-    font-weight: 100;
-    position: relative;
-    top: 1em;
-    text-transform: lowercase;
+.card__price {
+    font-size: 1.75em;
+    font-weight: 700;
 }
 
-.wave:nth-child(2),
-.wave:nth-child(3) {
-    top: 210px;
+.flow > * + * {
+    margin-top: var(--flow-space, 1.25em);
 }
 
-.playing .wave {
-    border-radius: 40%;
-    animation: wave 3000ms infinite linear;
+.cta {
+    display: block;
+    align-self: end;
+    margin: 1em 0 0.5em 0;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #0d0d0d;
+    padding: 0.7em;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
-.wave {
-    border-radius: 40%;
-    animation: wave 55s infinite linear;
-    animation-timing-function: ease-in-out;
+.overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    user-select: none;
+    opacity: var(--opacity, 0);
+    -webkit-mask: radial-gradient(
+            circle 25rem at var(--x, 50%) var(--y, 50%),
+            #000 1%,
+            transparent 50%
+    );
+    mask: radial-gradient(
+            circle 25rem at var(--x, 50%) var(--y, 50%),
+            #000 1%,
+            transparent 50%
+    );
+    transition: opacity 400ms ease;
+    will-change: opacity;
 }
 
-.playing .wave:nth-child(2) {
-    animation-duration: 4000ms;
+.overlay .card {
+    background-color: hsla(var(--hsl), 0.15);
+    border-color: hsla(var(--hsl), 1);
+    box-shadow: 0 0 0 1px inset hsl(var(--hsl));
 }
 
-.wave:nth-child(2) {
-    animation-duration: 50s;
+.overlay .cta {
+    display: block;
+    grid-row: -1;
+    width: 100%;
+    background-color: hsl(var(--hsl));
+    box-shadow: 0 0 0 1px hsl(var(--hsl));
 }
 
-.playing .wave:nth-child(3) {
-    animation-duration: 5000ms;
+.cards__inner .card {
+    transition: 400ms background ease;
+    will-change: background;
 }
 
-.wave:nth-child(3) {
-    animation-duration: 45s;
-}
-
-@keyframes wave {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+.cards__inner .card:hover {
+    --lightness: 95%;
+    background: hsla(var(--hsl), 0.1);
 }
