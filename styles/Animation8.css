@@ -1,0 +1,158 @@
+:root {
+    --primary: #6366f1;
+    --secondary: #818cf8;
+    --background: #0f172a;
+    --surface: #1e293b;
+    --glow: rgba(99, 102, 241, 0.2);
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--background), var(--surface));
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1500px;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.scene {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    transform-style: preserve-3d;
+    animation: sceneRotate 30s infinite linear;
+    will-change: transform;
+}
+
+.platform {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.platform:hover {
+    transform: scale(1.15) translateY(-25px);
+    filter: brightness(1.2);
+}
+
+.platform:hover .glow {
+    opacity: 0.8;
+    transform: scale(1.3);
+}
+
+.platform1 { left: 180px; top: 80px; }
+.platform2 { right: 40px; top: 220px; }
+.platform3 { left: 80px; bottom: 40px; }
+
+.top {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    transform: rotateX(90deg) translateZ(25px);
+    border: 2px solid var(--secondary);
+    backdrop-filter: blur(5px);
+}
+
+.side {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    background: var(--surface);
+    transform-origin: top;
+    transform: rotateX(-90deg);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    border: 2px solid var(--secondary);
+    opacity: 0.8;
+}
+
+.glow {
+    position: absolute;
+    width: 180%;
+    height: 180%;
+    background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+    top: -40%;
+    left: -40%;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    filter: blur(15px);
+}
+
+.hologram {
+    position: absolute;
+    width: 50px;
+    height: 70px;
+    background: linear-gradient(transparent, rgba(99, 102, 241, 0.2));
+    transform-style: preserve-3d;
+    animation: hologramFloat 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(2px);
+}
+
+.grid {
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background:
+            linear-gradient(transparent 95%, rgba(99, 102, 241, 0.1) 100%),
+            linear-gradient(90deg, transparent 95%, rgba(99, 102, 241, 0.1) 100%);
+    background-size: 50px 50px;
+    transform: perspective(800px) rotateX(60deg);
+    animation: gridMove 25s infinite linear;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    background: var(--secondary);
+    border-radius: 50%;
+    filter: blur(2px);
+    animation: particleFloat 5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.scanline {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(99, 102, 241, 0.05) 50%,
+    transparent 100%);
+    animation: scanline 8s infinite linear;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+@keyframes sceneRotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+
+@keyframes hologramFloat {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+    50% { transform: translateY(-30px) scale(1.15); opacity: 0.7; }
+}
+
+@keyframes gridMove {
+    from { transform: perspective(800px) rotateX(60deg) translateY(0); }
+    to { transform: perspective(800px) rotateX(60deg) translateY(50px); }
+}
+
+@keyframes particleFloat {
+    0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+    50% { transform: translateY(-40px) translateX(25px) scale(1.2); }
+}
+
+@keyframes scanline {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100%); }
+}
